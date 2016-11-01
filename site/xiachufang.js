@@ -1,4 +1,3 @@
-
 var cheerio = require('cheerio');
 var superagent = require('superagent');
 var async = require('async');
@@ -38,12 +37,16 @@ function getItems(resText, num, itemXML) {
             var itemTitle = $(this).find('.name a').text();
             var itemDate = '';
             var author = $(this).find('.author').text();
+
+            var itemDesc = $(this).find('.cover a img').attr('data-src');
+            itemDesc = '<img src="' + itemDesc + '">';
             var guid = itemUrl.slice(-15);
             console.log({
                 i,
                 itemUrl,
                 itemTitle,
                 itemDate,
+                itemDesc,
                 author,
             });
             //保存链接
@@ -52,7 +55,7 @@ function getItems(resText, num, itemXML) {
             var item = itemXML.replace(/{itemUrl}/, itemUrl)
                 .replace(/{itemTitle}/, itemTitle)
                 .replace(/{itemDate}/, itemDate)
-                .replace(/{itemDesc}/, '{' + itemUrl + '}')
+                .replace(/{itemDesc}/, itemDesc)
                 .replace(/{author}/, author)
                 .replace(/{guid}/, guid)
             items += item;
