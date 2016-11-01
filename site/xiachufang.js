@@ -1,13 +1,14 @@
+
 var cheerio = require('cheerio');
 var superagent = require('superagent');
 var async = require('async');
 
 //基本信息
-var homeUrl = 'http://lusongsong.com/info',
-    imgTitle = '卢松松',
-    imgUrl = 'http://lusongsong.com/favicon.ico',
-    rssTitle = '卢松松',
-    desc = '卢松松',
+var homeUrl = 'http://www.xiachufang.com/explore',
+    imgTitle = '下厨房',
+    imgUrl = homeUrl + '/favicon.ico',
+    rssTitle = '下厨房',
+    desc = '下厨房',
     pubDate = '';
 
 /**
@@ -23,7 +24,7 @@ function getItems(resText, num, itemXML) {
         var $ = cheerio.load(resText);
         var items = '';
         var links = [];
-        var lists = $('.post');
+        var lists = $('.normal-recipe-list ul li');
         lists.each(function(i, val) {
             //文章数量限制
             if (i >= num) {
@@ -32,24 +33,17 @@ function getItems(resText, num, itemXML) {
                     items,
                     links,
                 })
-
             }
-
-            var itemUrl = $(this).find('h2 a').attr('href');
-            var itemTitle = $(this).find('h2 a').text();
-            var itemDate = $(this).find('h6').text().slice(0, 12);
-            var author = $(this).find('h6 a').text();
+            var itemUrl = homeUrl + $(this).find('.name a').attr('href');
+            var itemTitle = $(this).find('.name a').text();
+            var itemDate = '';
+            var author = $(this).find('.author').text();
             var guid = itemUrl.slice(-15);
-
-            var itemDesc = $(this).find('.intro p').text();
-
-
             console.log({
                 i,
                 itemUrl,
                 itemTitle,
                 itemDate,
-                itemDesc,
                 author,
             });
             //保存链接
@@ -58,7 +52,7 @@ function getItems(resText, num, itemXML) {
             var item = itemXML.replace(/{itemUrl}/, itemUrl)
                 .replace(/{itemTitle}/, itemTitle)
                 .replace(/{itemDate}/, itemDate)
-                .replace(/{itemDesc}/, itemDesc)
+                .replace(/{itemDesc}/, '{' + itemUrl + '}')
                 .replace(/{author}/, author)
                 .replace(/{guid}/, guid)
             items += item;
