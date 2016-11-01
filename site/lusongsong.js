@@ -3,7 +3,7 @@ var superagent = require('superagent');
 var async = require('async');
 
 //基本信息
-var homeUrl = 'http://m.lusongsong.com',
+var homeUrl = 'http://lusongsong.com/info',
     imgTitle = '卢松松',
     imgUrl = 'http://lusongsong.com/favicon.ico',
     rssTitle = '卢松松',
@@ -23,7 +23,7 @@ function getItems(resText, num, itemXML) {
         var $ = cheerio.load(resText);
         var items = '';
         var links = [];
-        var lists = $('.mod-pictxt ul li');
+        var lists = $('.post');
         lists.each(function(i, val) {
             //文章数量限制
             if (i >= num) {
@@ -34,13 +34,13 @@ function getItems(resText, num, itemXML) {
                 })
             }
 
-            var itemUrl = homeUrl + $(this).find('a').attr('href');
-            var itemTitle = $(this).find('h3').text();
-            var itemDate = '';
-            var author = 'lusongsong';
+            var itemUrl = $(this).find('h2 a').attr('href');
+            var itemTitle = $(this).find('h2 a').text();
+            var itemDate = $(this).find('h6').text().slice(0,12);
+            var author = $(this).find('h6 a').text();
             var guid = itemUrl.slice(-15);
 
-            var itemDesc = $(this).find('p').text();
+            var itemDesc = $(this).find('.intro p').text();
 
             console.log({
                 i,

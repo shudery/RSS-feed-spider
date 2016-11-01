@@ -56,7 +56,6 @@ app.get('/', function(req, res) {
                             .replace(/{desc}/, site.desc)
                             .replace(/{pubDate}/, site.pubDate);
                         //返回内容
-                        console.log(datas)
                         res.send(datas);
                     })
             }
