@@ -1,5 +1,4 @@
 var express = require('express');
-var cheerio = require('cheerio');
 var superagent = require('superagent');
 var async = require('async');
 var rssXML = require('./rssXML.js').xml;
@@ -26,11 +25,9 @@ app.get('/', function(req, res) {
     superagent.get(site.homeUrl)
         .end(function(err, homeRes) {
             err && console.log(err);
-            //下载主页内容
-            var $ = cheerio.load(homeRes.text);
-            //文章概要
+             //文章概要
             if (desc) {
-                site.getItems($, num, itemXML)
+                site.getItems(homeRes.text, num, itemXML)
                     .then((obj) => {
                         return site.getDesc(obj)
                     })
@@ -47,7 +44,7 @@ app.get('/', function(req, res) {
                         res.send(datas);
                     })
             } else {
-                site.getItems($, num, itemXML)
+                site.getItems(homeRes.text, num, itemXML)
                     .then((obj) => {
                     	console.log('no catch desc.')
                         var items = obj.items;

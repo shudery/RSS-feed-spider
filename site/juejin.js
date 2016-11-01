@@ -3,11 +3,11 @@ var superagent = require('superagent');
 var async = require('async');
 
 //基本信息
-var homeUrl = 'http://www.jianshu.com',
-    imgTitle = '简书',
-    imgUrl = 'http://baijii-common.b0.upaiyun.com/icons/favicon.ico',
-    rssTitle = '简书',
-    desc = '读书的地方',
+var homeUrl = 'http://gold.xitu.io/welcome/frontend',
+    imgTitle = '掘金',
+    imgUrl = 'http://assets.gold.xitu.io/favicons/favicon-16x16.png',
+    rssTitle = '掘金',
+    desc = '掘金',
     pubDate = '20161220';
 
 /**
@@ -19,25 +19,25 @@ var homeUrl = 'http://www.jianshu.com',
  */
 function getItems(resText, num, itemXML) {
     return new Promise((resolve, reject) => {
-        //下载主页内容
         var $ = cheerio.load(resText);
+
         var items = '';
         var links = [];
-        var lists = $('.have-img');
+        var lists = $('.entries .entry');
         lists.each(function(i, val) {
             //文章数量限制
             if (i >= num) {
-                //将拼接的xml和爬取的Link抛出
                 resolve({
                     items,
                     links,
                 })
             }
-            var itemUrl = homeUrl + $(this).find('.title a').attr('href');
-            var itemTitle = $(this).find('.title a').text();
-            var itemDate = $(this).find('.list-top .time').attr('data-shared-at');
-            var author = $(this).find('.list-top .author-name').text();
-            var guid = $(this).find('.title a').attr('href');
+            var url = $(this).attr('@click').replace(/.*?"(.*?)".*/,'$1');
+            var itemUrl = url;
+            var itemTitle = $(this).find('.entry-title').text();
+            var itemDate = new Date();
+            var author = $(this).find('.entry-username').text();
+            var guid = url;
             console.log(itemUrl+"::"+itemTitle);
             //保存链接
             links.push(itemUrl);
@@ -50,7 +50,7 @@ function getItems(resText, num, itemXML) {
                 .replace(/{guid}/gi, guid)
             items += item;
         });
-
+        //将拼接的xml和爬取的Link抛出
     })
 
 }
@@ -66,7 +66,7 @@ function getDesc(obj) {
         var arr = [];
         //爬取并发控制
         async.mapLimit(links, 5, function(url, callback) {
-            console.log('desc:'+url)
+            console.log(url)
             superagent.get(url)
                 .end(function(err, homeRes) {
                     err && console.log(err);
