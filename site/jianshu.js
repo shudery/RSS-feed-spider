@@ -35,15 +35,15 @@ function getItems(resText, num, itemXML) {
             }
             var itemUrl = homeUrl + $(this).find('.title a').attr('href');
             var itemTitle = $(this).find('.title a').text();
-            var itemDate = '';
+            var itemDate = $(this).find('.list-top .time').attr('data-shared-at');
             var author = $(this).find('.list-top .author-name').text();
-            var guid = $(this).find('.title a').attr('href');
+            var guid = Math.random()*10000000;
             console.log({
-            	i,
-            	itemUrl,
-            	itemTitle,
-            	itemDate,
-            	author,
+                i,
+                itemUrl,
+                itemTitle,
+                itemDate,
+                author,
             });
             //保存链接
             links.push(itemUrl);
@@ -72,7 +72,7 @@ function getDesc(obj) {
         var arr = [];
         //爬取并发控制
         async.mapLimit(links, 5, function(url, callback) {
-            console.log('desc:'+url)
+            console.log('desc:' + url)
             superagent.get(url)
                 .end(function(err, homeRes) {
                     err && console.log(err);
