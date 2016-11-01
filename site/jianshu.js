@@ -37,7 +37,7 @@ function getItems(resText, num, itemXML) {
             var itemTitle = $(this).find('.title a').text();
             var itemDate = $(this).find('.list-top .time').attr('data-shared-at');
             var author = $(this).find('.list-top .author-name').text();
-            var guid = Math.random()*10000000;
+            var guid = $(this).find('.title a').attr('href').slice(-15);
             console.log({
                 i,
                 itemUrl,

@@ -36,7 +36,7 @@ function getItems(resText, num, itemXML) {
             var itemTitle = $(this).find('a').text();
             var itemDate = '';
             var author = '';
-            var guid = Math.random()*10000000;
+            var guid = itemUrl.slice(-15);
 
             console.log({
                 i,
