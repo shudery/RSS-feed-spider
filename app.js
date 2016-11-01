@@ -1,7 +1,6 @@
 var express = require('express');
 var cheerio = require('cheerio');
 var superagent = require('superagent');
-var fs = require('fs');
 var async = require('async');
 var rssXML = require('./rssXML.js').xml;
 var itemXML = require('./rssXML.js').item;
@@ -18,6 +17,7 @@ app.all('*', function(req, res, next) {
 app.get('/', function(req, res) {
     //解析查询字符串
     var val = req.query.site;
+    var num = req.query.num || 10;
     //引入对应站点配置文件
     site = require('./site/' + val);
 
@@ -28,7 +28,7 @@ app.get('/', function(req, res) {
             //下载主页内容
             var $ = cheerio.load(homeRes.text);
             //文章概要
-            site.getItems($, itemXML)
+            site.getItems($, num, itemXML)
                 .then((items) => {
                     var datas = rssXML.replace(/{items}/, items)
                         .replace(/{rssTitle}/, site.rssTitle)

@@ -8,12 +8,15 @@ var homeUrl = 'http://www.jianshu.com',
     desc = '读书的地方',
     pubDate = '20161220';
 
-function getItems($, itemXML) {
+function getItems($, num, itemXML) {
     return new Promise((resolve, reject) => {
         var items = '';
         var links = [];
         var lists = $('.have-img');
         lists.each(function(i, val) {
+            if (i >= num) {
+                return
+            }
             var itemUrl = homeUrl + $(this).find('.title a').attr('href');
             var itemTitle = $(this).find('.title a').text();
             var itemDate = $(this).find('.list-top .time').attr('data-shared-at');
