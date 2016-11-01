@@ -35,7 +35,7 @@ function getItems(resText, num, itemXML) {
             }
             var itemUrl = homeUrl + $(this).find('.title a').attr('href');
             var itemTitle = $(this).find('.title a').text();
-            var itemDate = $(this).find('.list-top .time').attr('data-shared-at');
+            var itemDate = '';
             var author = $(this).find('.list-top .author-name').text();
             var guid = $(this).find('.title a').attr('href');
             console.log({
