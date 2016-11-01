@@ -11,34 +11,38 @@ var app = express();
 //allow custom header and CORS
 app.all('*', function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
-    // res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
-    // res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
     next();
 });
 
+//路由
 app.get('/', function(req, res) {
-	var val = req.query.site;
-    var site = require('./site/' + val);
-    rssXML = rssXML.replace(/{rssTitle}/, site.rssTitle)
-        .replace(/{homeUrl}/gi, site.homeUrl)
-        .replace(/{imgTitle}/, site.imgTitle)
-        .replace(/{imgUrl}/, site.imgUrl)
-        .replace(/{desc}/, site.desc)
-        .replace(/{pubDate}/, site.pubDate)
+    //解析查询字符串
+    var val = req.query.site;
+    //引入对应站点配置文件
+    site = require('./site/' + val);
 
+    //爬取主页
     superagent.get(site.homeUrl)
         .end(function(err, homeRes) {
-            if (err) {
-                console.log(err)
-            }
+            err && console.log(err);
+            //下载主页内容
             var $ = cheerio.load(homeRes.text);
-            var items = site.getItems($, itemXML);
-            var datas = rssXML.replace(/{items}/, items);
-            res.send(datas);
+            //文章概要
+            site.getItems($, itemXML)
+                .then((items) => {
+                    var datas = rssXML.replace(/{items}/, items)
+                        .replace(/{rssTitle}/, site.rssTitle)
+                        .replace(/{homeUrl}/gi, site.homeUrl)
+                        .replace(/{imgTitle}/, site.imgTitle)
+                        .replace(/{imgUrl}/, site.imgUrl)
+                        .replace(/{desc}/, site.desc)
+                        .replace(/{pubDate}/, site.pubDate);
+                    //返回内容
+                    res.send(datas);
+                })
+
         })
 });
-
-
 
 app.listen(process.env.PORT || 5000, () => {
     console.log('port 5000 listen now.')
