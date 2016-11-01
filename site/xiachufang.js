@@ -33,7 +33,7 @@ function getItems(resText, num, itemXML) {
                     links,
                 })
             }
-            var itemUrl = homeUrl + $(this).find('.name a').attr('href');
+            var itemUrl = 'http://www.xiachufang.com' + $(this).find('.name a').attr('href');
             var itemTitle = $(this).find('.name a').text();
             var itemDate = '';
             var author = $(this).find('.author').text();
