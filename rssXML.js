@@ -12,7 +12,7 @@ var xml = `\
   <description>{desc}</description>\    
   <link>{homeUrl}</link>\    
   <language>zh-cn</language>\   
-  <generator>WWW.SINA.COM.CN</generator>\     
+  <generator>SHUDERY</generator>\     
   <ttl>5</ttl>\    
   <copyright>MIT</copyright>\     
   <pubDate>{pubDate}</pubDate>\   

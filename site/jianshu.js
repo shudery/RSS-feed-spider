@@ -7,8 +7,8 @@ var homeUrl = 'http://www.jianshu.com',
     imgTitle = '简书',
     imgUrl = 'http://baijii-common.b0.upaiyun.com/icons/favicon.ico',
     rssTitle = '简书',
-    desc = '读书的地方',
-    pubDate = '20161220';
+    desc = '简书',
+    pubDate = 'Wed, 02 Oct 2016 08:00:00 EST';
 
 /**
  * 爬取主页，获得文章基本信息
@@ -38,7 +38,13 @@ function getItems(resText, num, itemXML) {
             var itemDate = $(this).find('.list-top .time').attr('data-shared-at');
             var author = $(this).find('.list-top .author-name').text();
             var guid = $(this).find('.title a').attr('href');
-            console.log(itemUrl+"::"+itemTitle);
+            console.log({
+            	i,
+            	itemUrl,
+            	itemTitle,
+            	itemDate,
+            	author,
+            });
             //保存链接
             links.push(itemUrl);
             //拼xml

@@ -8,7 +8,7 @@ var homeUrl = 'http://gold.xitu.io/welcome/frontend',
     imgUrl = 'http://assets.gold.xitu.io/favicons/favicon-16x16.png',
     rssTitle = '掘金',
     desc = '掘金',
-    pubDate = '20161220';
+    pubDate = 'Wed, 02 Oct 2016 08:00:00 EST';
 
 /**
  * 爬取主页，获得文章基本信息
@@ -31,14 +31,21 @@ function getItems(resText, num, itemXML) {
                     items,
                     links,
                 })
-            }
+            };
             var url = $(this).attr('@click').replace(/.*?"(.*?)".*/,'$1');
             var itemUrl = url;
             var itemTitle = $(this).find('.entry-title').text();
-            var itemDate = new Date();
+            var itemDate = '';
             var author = $(this).find('.entry-username').text();
             var guid = url;
-            console.log(itemUrl+"::"+itemTitle);
+
+            console.log({
+            	i,
+            	itemUrl,
+            	itemTitle,
+            	itemDate,
+            	author,
+            });
             //保存链接
             links.push(itemUrl);
             //拼xml
