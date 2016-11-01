@@ -32,6 +32,18 @@ function getItems($, num, itemXML) {
                 .replace(/{guid}/gi, guid)
             items += item;
         });
+        resolve({
+            items,
+            links,
+        })
+    })
+
+}
+
+function getDesc(obj) {
+    return new Promise((resolve, reject) => {
+        var links = obj.links;
+        var items = obj.items;
         var arr = [];
         async.mapLimit(links, 5, function(url, callback) {
             console.log(url)
@@ -56,7 +68,6 @@ function getItems($, num, itemXML) {
             resolve(items);
         })
     })
-
 }
 module.exports = {
     homeUrl,
@@ -66,4 +77,5 @@ module.exports = {
     desc,
     pubDate,
     getItems,
+    getDesc,
 }
