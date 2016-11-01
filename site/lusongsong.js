@@ -3,11 +3,11 @@ var superagent = require('superagent');
 var async = require('async');
 
 //基本信息
-var homeUrl = 'http://www.jianshu.com',
-    imgTitle = '简书',
-    imgUrl = 'http://baijii-common.b0.upaiyun.com/icons/favicon.ico',
-    rssTitle = '简书',
-    desc = '简书',
+var homeUrl = 'http://m.lusongsong.com',
+    imgTitle = '卢松松',
+    imgUrl = 'http://lusongsong.com/favicon.ico',
+    rssTitle = '卢松松',
+    desc = '卢松松',
     pubDate = '';
 
 /**
@@ -23,7 +23,7 @@ function getItems(resText, num, itemXML) {
         var $ = cheerio.load(resText);
         var items = '';
         var links = [];
-        var lists = $('.have-img');
+        var lists = $('.mod-pictxt ul li');
         lists.each(function(i, val) {
             //文章数量限制
             if (i >= num) {
@@ -33,16 +33,21 @@ function getItems(resText, num, itemXML) {
                     links,
                 })
             }
-            var itemUrl = homeUrl + $(this).find('.title a').attr('href');
-            var itemTitle = $(this).find('.title a').text();
-            var itemDate = $(this).find('.list-top .time').attr('data-shared-at');
-            var author = $(this).find('.list-top .author-name').text();
-            var guid = $(this).find('.title a').attr('href').slice(-15);
+
+            var itemUrl = homeUrl + $(this).find('a').attr('href');
+            var itemTitle = $(this).find('h3').text();
+            var itemDate = '';
+            var author = 'lusongsong';
+            var guid = itemUrl.slice(-15);
+
+            var itemDesc = $(this).find('p').text();
+
             console.log({
                 i,
                 itemUrl,
                 itemTitle,
                 itemDate,
+                itemDesc,
                 author,
             });
             //保存链接
@@ -51,7 +56,7 @@ function getItems(resText, num, itemXML) {
             var item = itemXML.replace(/{itemUrl}/, itemUrl)
                 .replace(/{itemTitle}/, itemTitle)
                 .replace(/{itemDate}/, itemDate)
-                .replace(/{itemDesc}/, '{' + itemUrl + '}')
+                .replace(/{itemDesc}/, itemDesc)
                 .replace(/{author}/, author)
                 .replace(/{guid}/, guid)
             items += item;

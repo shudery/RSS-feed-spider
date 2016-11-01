@@ -25,14 +25,14 @@ app.get('/', function(req, res) {
     superagent.get(site.homeUrl)
         .end(function(err, homeRes) {
             err && console.log(err);
-             //文章概要
+            //文章概要
             if (desc) {
                 site.getItems(homeRes.text, num, itemXML)
                     .then((obj) => {
                         return site.getDesc(obj)
                     })
                     .then((items) => {
-                    	console.log('catch desc.')
+                        console.log('catch desc.')
                         var datas = rssXML.replace(/{items}/, items)
                             .replace(/{rssTitle}/, site.rssTitle)
                             .replace(/{homeUrl}/gi, site.homeUrl)
@@ -46,7 +46,7 @@ app.get('/', function(req, res) {
             } else {
                 site.getItems(homeRes.text, num, itemXML)
                     .then((obj) => {
-                    	console.log('no catch desc.')
+                        console.log('no catch desc.')
                         var items = obj.items;
                         var datas = rssXML.replace(/{items}/, items)
                             .replace(/{rssTitle}/, site.rssTitle)
