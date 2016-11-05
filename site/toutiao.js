@@ -3,11 +3,11 @@ var superagent = require('superagent');
 var async = require('async');
 
 //基本信息
-var homeUrl = 'http://www.jianshu.com',
-    imgTitle = '简书',
-    imgUrl = 'http://baijii-common.b0.upaiyun.com/icons/favicon.ico',
-    rssTitle = '简书',
-    desc = '简书',
+var homeUrl = 'https://toutiao.io',
+    imgTitle = '开发者头条',
+    imgUrl = homeUrl+'/favicon-32x32.png',
+    rssTitle = '开发者头条',
+    desc = '开发者头条',
     pubDate = '';
 
 /**
@@ -23,7 +23,7 @@ function getItems(resText, num, itemXML) {
         var $ = cheerio.load(resText);
         var items = '';
         var links = [];
-        var lists = $('.have-img');
+        var lists = $('.post');
         lists.each(function(i, val) {
             //文章数量限制
             if (i >= num) {
@@ -33,10 +33,10 @@ function getItems(resText, num, itemXML) {
                     links,
                 })
             }
-            var itemUrl = homeUrl + $(this).find('.title a').attr('href');
-            var itemTitle = $(this).find('.title a').text();
-            var itemDate = $(this).find('.list-top .time').attr('data-shared-at');
-            var author = $(this).find('.list-top .author-name').text();
+            var itemUrl = homeUrl + $(this).find('h3.title a').attr('href');
+            var itemTitle = $(this).find('h3.title a').text();
+            var itemDate = '';
+            var author = $(this).find('.subject-name a').text();
             var guid = itemUrl.slice(-15);
             console.log({
                 i,
