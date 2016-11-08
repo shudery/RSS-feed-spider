@@ -37,6 +37,7 @@ function getItems(resText, num, itemXML) {
             var itemTitle = $(this).find('h2 a').text();
             var itemDate = '';
             var author = '';
+            
             var guid = itemUrl.slice(-15);
             console.log({
                 i,
