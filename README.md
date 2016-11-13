@@ -16,8 +16,11 @@
 
 #### 完成站点
 - [简书热门频道](https://daguo-rss.herokuapp.com/?site=jianshu)
-- [掘金前端](https://daguo-rss.herokuapp.com/?site=juejin)
 - [电子科技大学UESTC新闻](https://daguo-rss.herokuapp.com/?site=uestc)
 - [卢松松好文分享](https://daguo-rss.herokuapp.com/?site=lusongsong)
-- [下厨房流行菜谱](https://daguo-rss.herokuapp.com/?site=xiachufang)
-- [开发者头条](https://toutiao.io/)
+- [开发者头条](https://daguo-rss.herokuapp.com/?site=toutiao)
+- [前端早读课](https://daguo-rss.herokuapp.com/?site=zaoduke)
+- ~~果壳~~
+- ~~下厨房流行菜谱~~
+- ~~掘金前端~~
+- ~~微信自媒体~~
