@@ -1,9 +1,7 @@
 var express = require('express');
 var superagent = require('superagent');
 var async = require('async');
-var rssXML = require('./rssXML.js').xml;
-var itemXML = require('./rssXML.js').item;
-
+var template = require('./rssXML.js');
 
 var app = express();
 //allow custom header and CORS
@@ -20,11 +18,13 @@ app.get('/', function(req, res) {
     var desc = req.query.desc || false;
     //引入对应站点配置文件
     site = require('./site/' + val);
-
+    var rssXML = template.xml;
+    var itemXML = template.item;
     //爬取主页
     superagent.get(site.homeUrl)
         .end(function(err, homeRes) {
             err && console.log(err);
+
             //文章概要
             if (desc) {
                 site.getItems(homeRes.text, num, itemXML)
