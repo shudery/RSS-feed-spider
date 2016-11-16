@@ -17,7 +17,7 @@ app.get('/', function(req, res) {
     let num = req.query.num || 10;
     let desc = req.query.desc || false;
     //引入对应站点配置文件
-    let site = require('./site/' + val);
+    site = require('./site/' + val);
     let rssXML = template.xml;
     let itemXML = template.item;
     //爬取主页
