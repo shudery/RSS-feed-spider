@@ -13,13 +13,13 @@ app.all('*', function(req, res, next) {
 //路由
 app.get('/', function(req, res) {
     //解析查询字符串
-    let val = req.query.site;
-    let num = req.query.num || 10;
-    let desc = req.query.desc || false;
+    var val = req.query.site;
+    var num = req.query.num || 10;
+    var desc = req.query.desc || false;
     //引入对应站点配置文件
-    site = require('./site/' + val);
-    let rssXML = template.xml;
-    let itemXML = template.item;
+    var site = require('./site/' + val);
+    var rssXML = template.xml;
+    var itemXML = template.item;
     //爬取主页
     superagent.get(site.homeUrl)
         .end(function(err, homeRes) {
