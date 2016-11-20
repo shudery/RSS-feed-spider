@@ -36,7 +36,7 @@ function getItems(resText, num, itemXML) {
             var itemTitle = info.title;
             var itemDate = '';
             var author = '';
-            var desc = "<img src='" + info.bigimgurl + "'>"
+            var desc = ""
             var guid = itemUrl.slice(-15);
             console.log({
                 i,
