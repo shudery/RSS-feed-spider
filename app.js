@@ -22,9 +22,10 @@ app.get('/', function(req, res) {
     var itemXML = template.item;
     //爬取主页
     superagent.get(site.homeUrl)
+    //开启buffer，获取返回的js文件，非js文件不冲突
+        .buffer(true)
         .end(function(err, homeRes) {
             err && console.log(err);
-
             //文章概要
             if (desc) {
                 site.getItems(homeRes.text, num, itemXML)
@@ -32,7 +33,7 @@ app.get('/', function(req, res) {
                         return site.getDesc(obj)
                     })
                     .then((items) => {
-                        console.log('catch desc.')
+                        console.log('catch desc:'+site.rssTitle)
                         var datas = rssXML.replace(/{items}/, items)
                             .replace(/{rssTitle}/, site.rssTitle)
                             .replace(/{homeUrl}/gi, site.homeUrl)
@@ -48,7 +49,7 @@ app.get('/', function(req, res) {
                 //不爬详细内容
                 site.getItems(homeRes.text, num, itemXML)
                     .then((obj) => {
-                        console.log('no catch desc.')
+                        console.log('no catch desc:'+site.rssTitle)
                         var items = obj.items;
                         var datas = rssXML.replace(/{items}/, items)
                             .replace(/{rssTitle}/, site.rssTitle)
