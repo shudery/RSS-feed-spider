@@ -18,9 +18,10 @@
 - [简书热门频道](https://daguo-rss.herokuapp.com/?site=jianshu)
 - [果壳](https://daguo-rss.herokuapp.com/?site=guoke)
 - [掘金前端](https://daguo-rss.herokuapp.com/?site=juejin)
-- [开发者头条](https://daguo-rss.herokuapp.com/?site=toutiao)
+- [TED](https://daguo-rss.herokuapp.com/?site=ted)
 - [前端早读课](https://daguo-rss.herokuapp.com/?site=zaoduke)
 - ~~电子科技大学UESTC新闻~~
 - ~~下厨房流行菜谱~~
 - ~~卢松松好文分享~~
 - ~~微信自媒体~~
+- ~~开发者头条~~
