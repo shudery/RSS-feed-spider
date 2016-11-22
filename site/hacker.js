@@ -3,11 +3,11 @@ var superagent = require('superagent');
 var async = require('async');
 
 //基本信息
-var homeUrl = 'http://c.open.163.com/opensg/opensg.do?callback=jQuery191008052917586194552_1479621726582&uuid=b5959f10-8e48-11e6-99e5-07941142be9f&ursid=&count=6&_=1479621726586',
-    imgTitle = 'TED',
-    imgUrl = 'http://c.open.163.com/favicon.ico',
-    rssTitle = 'TED',
-    desc = 'TED',
+var homeUrl = 'https://news.ycombinator.com/',
+    imgTitle = 'Hacker News',
+    imgUrl = 'https://news.ycombinator.com/favicon.ico',
+    rssTitle = 'Hacker News',
+    desc = 'Hacker News',
     pubDate = '';
 
 /**
@@ -19,11 +19,12 @@ var homeUrl = 'http://c.open.163.com/opensg/opensg.do?callback=jQuery19100805291
  */
 function getItems(resText, num, itemXML) {
     return new Promise((resolve, reject) => {
+        //下载主页内容
+        var $ = cheerio.load(resText);
         var items = '';
         var links = [];
-        var obj = JSON.parse(resText.match(/1479621726582\((.*)\)/)[1]);
-        obj.result.forEach(function(val, i) {
-            var info = val.iteminfo;
+        var lists = $('.athing');
+        lists.each(function(i, val) {
             //文章数量限制
             if (i >= num) {
                 //将拼接的xml和爬取的Link抛出
@@ -32,18 +33,16 @@ function getItems(resText, num, itemXML) {
                     links,
                 })
             }
-            var itemUrl = info.url;
-            var itemTitle = info.title;
+            var itemUrl = $(this).find('.title a').attr('href');
+            var itemTitle = $(this).find('.title a').text();
             var itemDate = '';
-            var author = '';
-            var desc = ""
+            var author = $(this).find('.sitebit a').text();
             var guid = itemUrl.slice(-15);
             console.log({
                 i,
                 itemUrl,
                 itemTitle,
                 itemDate,
-                desc,
                 author,
             });
             //保存链接
@@ -52,7 +51,7 @@ function getItems(resText, num, itemXML) {
             var item = itemXML.replace(/{itemUrl}/, itemUrl)
                 .replace(/{itemTitle}/, itemTitle)
                 .replace(/{itemDate}/, itemDate)
-                .replace(/{itemDesc}/, '{' + itemUrl + '}\n' + desc)
+                .replace(/{itemDesc}/, '{' + itemUrl + '}')
                 .replace(/{author}/, author)
                 .replace(/{guid}/, guid)
             items += item;
@@ -81,7 +80,7 @@ function getDesc(obj) {
                 .end(function(err, homeRes) {
                     err && console.log(err);
                     //下载文章内容
-                    var $ = cheerio.load(homeRes.text);s
+                    var $ = cheerio.load(homeRes.text);
                     //文章概要
                     var content = $('.show-content').html();
                     callback(null, {
@@ -89,8 +88,10 @@ function getDesc(obj) {
                         content: content,
                     })
                 })
+
         }, function(err, result) {
             //result是一个数组，收集的所有callback的第二个参数值
+
             result.forEach((val) => {
                     var reg = new RegExp('{' + val.link + '}')
                     items = items.replace(reg, val.content)

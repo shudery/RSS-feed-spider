@@ -20,6 +20,7 @@
 - [掘金前端](https://daguo-rss.herokuapp.com/?site=juejin)
 - [TED](https://daguo-rss.herokuapp.com/?site=ted)
 - [前端早读课](https://daguo-rss.herokuapp.com/?site=zaoduke)
+- [Hacker News](https://daguo-rss.herokuapp.com/?site=hacker)
 - ~~电子科技大学UESTC新闻~~
 - ~~下厨房流行菜谱~~
 - ~~卢松松好文分享~~
