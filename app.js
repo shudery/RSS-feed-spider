@@ -22,8 +22,11 @@ app.get('/', function(req, res) {
     var itemXML = template.item;
     //爬取主页
     superagent.get(site.homeUrl)
-    //开启buffer，获取返回的js文件，非js文件不冲突
+        //开启buffer，获取返回的js文件，非js文件不冲突
         .buffer(true)
+        // .set('Host', 'chuansong.me')
+        // .set('Upgrade-Insecure-Requests', '1')
+        .set('User-Agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.95 Safari/537.36')
         .end(function(err, homeRes) {
             err && console.log(err);
             //文章概要
@@ -33,7 +36,7 @@ app.get('/', function(req, res) {
                         return site.getDesc(obj)
                     })
                     .then((items) => {
-                        console.log('catch desc:'+site.rssTitle)
+                        console.log('catch desc:' + site.rssTitle)
                         var datas = rssXML.replace(/{items}/, items)
                             .replace(/{rssTitle}/, site.rssTitle)
                             .replace(/{homeUrl}/gi, site.homeUrl)
@@ -49,7 +52,7 @@ app.get('/', function(req, res) {
                 //不爬详细内容
                 site.getItems(homeRes.text, num, itemXML)
                     .then((obj) => {
-                        console.log('no catch desc:'+site.rssTitle)
+                        console.log('no catch desc:' + site.rssTitle)
                         var items = obj.items;
                         var datas = rssXML.replace(/{items}/, items)
                             .replace(/{rssTitle}/, site.rssTitle)

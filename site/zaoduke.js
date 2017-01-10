@@ -12,7 +12,7 @@ var homeUrl = 'http://chuansong.me/account/FeZaoDuKe',
 
 /**
  * 爬取主页，获得文章基本信息
- * @param  {[type]} $       [主页内容]
+ * @param  {[type]} $       [主页内容]z
  * @param  {[type]} num     [限制文章数量]
  * @param  {[type]} itemXML [文章xml模板]
  * @return {[type]}         [{links,items}]
